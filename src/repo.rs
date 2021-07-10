@@ -172,7 +172,20 @@ impl RepoDir {
 
     pub fn get_ns_repos(&self, ns: &str) -> Result<Vec<String>, Box<dyn Error>> {
         let dir = self.get_repo_dir(ns)?;
-        util::get_dirs(&dir)
+        let dirs = util::get_dirs(&dir)?;
+
+        let dirs = dirs
+            .iter()
+            .filter_map(|repo| {
+                let repo_path = format!("{}/{}", dir, repo);
+                match self.config.check_dir(repo_path.as_str()) {
+                    true => Some(String::from(repo)),
+                    false => None,
+                }
+            })
+            .collect::<Vec<String>>();
+
+        Ok(dirs)
     }
 
     pub fn get_repos(&self) -> Result<HashMap<String, Vec<String>>, Box<dyn Error>> {
