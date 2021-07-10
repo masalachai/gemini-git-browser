@@ -8,12 +8,12 @@ It can be seen in action at gemini://git.ritesh.ch
 
 ## Demo
 
-A local demo can be run by cloning the repository and build a local docker container that will host a sample repository within the container.
+A local demo can be run by cloning the repository and building a local docker container that will host a sample repository within the container.
 
 ```
 git clone git@github.com:masalachai/gemini-git-browser.git && cd gemini-git-browser
 sh deploy/deploy.sh development
-docker run -p 1965:1965 -it gemini_git_browser
+docker run -p 1965:1965 -it gemini_git_browser:latest
 ```
 
 Once the container is running, the capsule can be seen with a gemini browser at gemini://localhost/
@@ -34,11 +34,11 @@ REPO_DIR=/repositories
 
 ```
 # $HOME/.config/config/config.toml
-allowed = allowed = ["masalachai", "masalachai/gemini-git-browser"]
+allowed = ["masalachai", "masalachai/gemini-git-browser"]
 title = ""
 ```
 
-One the `REPO_DIR` variable and `config.toml` file is set, executing the binary should serve the repos at the gemini port.
+Once the `REPO_DIR` variable and `config.toml` file is set, executing the binary should serve the repos at the gemini port.
 
 ## License
 
