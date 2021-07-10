@@ -1,0 +1,10 @@
+TYPE=rust
+SERVICE_NAME=gemini-git-browser
+REPO=git@gitea.ayravat.com:chitlangi/gemini-git-browser.git
+RESTART_COMMAND="sh deploy/run.sh restart"
+BUILD=cargo
+FORMAT=actix-web
+FORMAT_INCLUDE="static templates"
+LINKED_FILES=""
+LINKED_DIRS="logs"
+DEPLOYMENT_DIR='$HOME/sites/$SERVICE_NAME'

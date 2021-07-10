@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  default:
+    image: gemini-git-browser:latest
+    container_name: gemini_git_browser
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "1965:1965"

@@ -1,0 +1,5 @@
+/target
+/repos
+/cert
+**/env.sh
+/deploy/.build

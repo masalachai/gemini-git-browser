@@ -1,0 +1,36 @@
+---
+kind: pipeline
+name: gemini-git-browser
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: production
+    image: ayravat/rust:1.53.0-ci
+    volumes:
+      - name: ssh
+        path: /root/.ssh
+      - name: target
+        path: /tmp/cargo-target
+      - name: cache
+        path: /tmp/cargo
+    commands:
+	  - export CARGO_HOME=/tmp/cargo
+	  - export CARGO_TARGET_DIR=/tmp/cargo-target
+      - sh deploy/deploy.sh production
+    when:
+      branch: master
+
+volumes:
+  - name: ssh
+    host:
+      path: /root/.ssh
+  - name: target
+    host:
+      path: /var/drone/cache/ritesh-ch
+  - name: cache
+    host:
+      path: /var/drone/cache/cargo
+...

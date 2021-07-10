@@ -1,0 +1,9 @@
+## Branches
+{{#each details.branches}}
+=> /{{ ../path }}/branch/{{ this }} 🎋 {{ this }}
+{{/each}}
+
+## Tree
+{{#each details.tree}}
+=> /{{ ../path }}/{{ this.item_type }}/{{ this.id }}       {{ this.icon }} {{ this.name }}
+{{/each}}

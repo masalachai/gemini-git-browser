@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /*tree
+Disallow: /*blob
+Disallow: /*branch
+Allow: /
