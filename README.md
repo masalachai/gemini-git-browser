@@ -4,6 +4,8 @@ The gemini git browser is a very basic UI to browse git repositories on the gemi
 
 It can be seen in action at gemini://git.ritesh.ch
 
+![](https://ci.ayravat.com/filestore/single-repo.jpeg) ![](https://ci.ayravat.com/filestore/file.jpeg) ![](https://ci.ayravat.com/filestore/repos.jpeg)
+
 ## Demo
 
 A local demo can be run by cloning the repository and build a local docker container that will host a sample repository within the container.
