@@ -1,6 +1,6 @@
 TYPE=rust
 SERVICE_NAME=gemini-git-browser
-REPO=git@gitea.ayravat.com:chitlangi/gemini-git-browser.git
+REPO=git@gitea.ayravat.com:ritesh/gemini-git-browser.git
 RESTART_COMMAND="sh deploy/run.sh restart"
 BUILD=cargo
 FORMAT=actix-web
