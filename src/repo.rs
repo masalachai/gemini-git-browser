@@ -177,7 +177,7 @@ impl RepoDir {
         let dirs = dirs
             .iter()
             .filter_map(|repo| {
-                let repo_path = format!("{}/{}", dir, repo);
+                let repo_path = format!("{}/{}", ns, repo);
                 match self.config.check_dir(repo_path.as_str()) {
                     true => Some(String::from(repo)),
                     false => None,
