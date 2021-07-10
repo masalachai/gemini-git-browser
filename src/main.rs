@@ -16,7 +16,7 @@ async fn main() -> anyhow::Result<(), anyhow::Error> {
 
     Server::bind(("0.0.0.0", gemini_port))
         .add_route("/robots.txt", actions::robots)
-        .add_route("/favicon.txt", actions::robots)
+        .add_route("/favicon.txt", actions::favicon)
         .add_route("/index.gmi", actions::robots)
         .add_route("/", actions::index)
         .set_timeout(Duration::from_secs(10))
