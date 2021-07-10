@@ -54,7 +54,7 @@ docker run -p 1965:1965 \
 	-it ayravat/gemini-git-browser:latest
 ```
 
-Ince the container is running you can access the UI at gemini://localhost/
+Once the container is running you can access the UI at gemini://localhost/
 
 ## License
 
