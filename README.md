@@ -40,6 +40,22 @@ title = ""
 
 Once the `REPO_DIR` variable and `config.toml` file is set, executing the binary should serve the repos at the gemini port.
 
+## Run from Docker
+
+The UI is also packaged as a docker image for easy deployment. To run it, create the `config.toml` file and a TLS certificate and private key first (gemini uses TLS by default), then mount the `config.toml`, the certificate and private key and your repository directory into the container with the following command.
+
+```
+# Paths used for the certificate and key are default let's encrypt paths
+docker run -p 1965:1965 \
+	-v /etc/letsencrypt/live/yourdomain.com/fullchain.pem:/app/cert/cert.pem \
+	-v /etc/letsencrypt/live/yourdomain.com/privkey.pem:/app/cert/key.pem \
+	-v /my-repositories:/repositories
+	-v $HOME/.config/config/config.toml:/root/.config/config/config.toml
+	-it ayravat/gemini-git-browser:latest
+```
+
+Ince the container is running you can access the UI at gemini://localhost/
+
 ## License
 
 The source is released under the GNU GPL v3, a copy of which is included in the repository
