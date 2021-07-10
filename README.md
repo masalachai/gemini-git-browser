@@ -28,11 +28,12 @@ To use it with your repos, please note the following.
 REPO_DIR=/repositories
 ```
 
-3. A `config.toml` file also needs to be created and placed at `$HOME/.config/config`. Within the `config.toml` there must be a list of namespace dirs and repo dirs which are allowed to be served.
+3. A `config.toml` file also needs to be created and placed at `$HOME/.config/config`. Within the `config.toml` there must be a list of namespace dirs and repo dirs which are allowed to be served, and a title, which may be left blank if unneeded.
 
 ```
 # $HOME/.config/config/config.toml
 allowed = allowed = ["masalachai", "masalachai/gemini-git-browser"]
+title = ""
 ```
 
 One the `REPO_DIR` variable and `config.toml` file is set, executing the binary should serve the repos at the gemini port.

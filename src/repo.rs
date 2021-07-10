@@ -33,7 +33,7 @@ pub struct RepoDetails {
 
 pub struct RepoDir {
     dir_path: String,
-    config: util::Config,
+    pub config: util::Config,
 }
 
 pub struct Repo<'a> {

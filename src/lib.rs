@@ -77,7 +77,7 @@ pub mod actions {
         let repos = repo::REPO_DIR.get_ns_repos(path).unwrap();
 
         let repo_list = serde_json::to_value(&repos).unwrap();
-        get_html("ns", "./templates/ns.hbs", &json!({"ns": path, "repos": &repo_list})).await
+        get_html("ns", "./templates/ns.hbs", &json!({"title": repo::REPO_DIR.config.title, "ns": path, "repos": &repo_list})).await
     }
 
     async fn get_page(request: Request) -> anyhow::Result<Response> {
@@ -115,7 +115,7 @@ pub mod actions {
 
                 let repos_json = serde_json::to_value(&repos).unwrap();
 
-                get_html("index", "./templates/index.hbs", &repos_json).await
+                get_html("index", "./templates/index.hbs", &json!({"title": repo::REPO_DIR.config.title, "repos": repos_json})).await
             } else {
                 get_page(request).await
             }

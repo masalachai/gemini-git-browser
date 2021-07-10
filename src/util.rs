@@ -3,12 +3,16 @@ use std::{error::Error, fs, path::Path};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
+    pub title: String,
     pub allowed: Vec<String>,
 }
 
 impl ::std::default::Default for Config {
     fn default() -> Self {
-        Self { allowed: vec![] }
+        Self {
+            title: String::from(""),
+            allowed: vec![],
+        }
     }
 }
 
