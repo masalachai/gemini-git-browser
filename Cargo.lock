@@ -244,6 +244,7 @@ dependencies = [
  "lazy_static",
  "mime",
  "northstar",
+ "regex",
  "serde",
  "serde_json",
  "tokio",

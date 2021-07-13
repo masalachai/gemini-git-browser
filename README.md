@@ -6,7 +6,7 @@ It can be seen in action at gemini://git.ritesh.ch
 
 Or on https://proxy.vulpes.one/gemini/git.ritesh.ch/ if you're on an HTTP browser.
 
-![](https://ci.ayravat.com/filestore/single-repo.jpeg) ![](https://ci.ayravat.com/filestore/file.jpeg) ![](https://ci.ayravat.com/filestore/repos.jpeg)
+![Single Repo View](https://ci.ayravat.com/filestore/single-repo.jpeg) ![File View](https://ci.ayravat.com/filestore/file.jpeg) ![Repo List View](https://ci.ayravat.com/filestore/repos.jpeg)
 
 ## Demo
 

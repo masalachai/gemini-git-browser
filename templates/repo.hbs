@@ -7,6 +7,11 @@
 
 
 ## Tree
-{{#each details.tree}}
+{{#each details.tree_response.tree}}
 => /{{ ../path }}/{{ this.item_type }}/{{ this.id }}       {{ this.icon }} {{ this.name }}
 {{/each}}
+
+
+{{#if details.tree_response.readme_text}}
+{{{ details.tree_response.readme_text }}}
+{{/if}}

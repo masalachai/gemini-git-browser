@@ -2,3 +2,7 @@
 {{#each this.tree}}
 =>/{{ ../path }}/{{ this.item_type }}/{{ this.id }}       {{ this.icon }} {{ this.name }}
 {{/each}}
+
+{{#if readme}}
+{{{ readme }}}
+{{/if}}

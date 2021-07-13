@@ -49,9 +49,17 @@ pub mod actions {
         let repo_path = format!("{}/{}", path_segments[0], path_segments[1]);
         let repo = repo::Repo::new(&repo_path).unwrap();
 
-        let tree = repo.get_tree(&path_segments[3]).unwrap();
+        let tree_response = repo.get_tree(&path_segments[3]).unwrap();
 
-        get_html("branch", "./templates/tree.hbs", &json!({"path": repo_path, "tree": tree})).await
+        get_html(
+            "branch",
+            "./templates/tree.hbs",
+            &json!({
+                "path": repo_path,
+                "tree": tree_response.tree,
+                "readme": tree_response.readme_text
+            })
+        ).await
     }
 
     async fn get_branch(path_segments: &Vec<String>) -> anyhow::Result<Response> {
@@ -60,9 +68,18 @@ pub mod actions {
 
         let branch = &path_segments[3];
 
-        let tree = repo.get_branch_tree(&branch).unwrap();
+        let tree_response = repo.get_branch_tree(&branch).unwrap();
 
-        get_html("branch", "./templates/tree.hbs", &json!({"path": repo_path, "title": branch, "tree": tree})).await
+        get_html(
+            "branch",
+            "./templates/tree.hbs",
+            &json!({
+                "path": repo_path,
+                "title": branch,
+                "tree": tree_response.tree,
+                "readme": tree_response.readme_text
+            })
+        ).await
     }
 
     async fn get_repo(path: &str) -> anyhow::Result<Response> {
@@ -70,7 +87,14 @@ pub mod actions {
 
         let repo_details = repo.get_details().unwrap();
 
-        get_html("repo", "./templates/repo.hbs", &json!({"path": path, "details": repo_details})).await
+        get_html(
+            "repo",
+            "./templates/repo.hbs",
+            &json!({
+                "path": path,
+                "details": repo_details
+            })
+        ).await
     }
 
     async fn get_repo_list(path: &str) -> anyhow::Result<Response> {

@@ -1,6 +1,6 @@
 use git2::{ObjectType, Oid, Reference, Repository, TreeEntry};
 use serde::Serialize;
-use std::{collections::HashMap, env, error::Error};
+use std::{collections::HashMap, env, error::Error, str};
 
 use crate::util;
 
@@ -17,6 +17,13 @@ pub struct TreeItem {
     name: String,
     item_type: ItemType,
     icon: String,
+    content_string: Option<String>,
+}
+
+#[derive(Serialize, Debug)]
+pub struct TreeResponse {
+    pub tree: Vec<TreeItem>,
+    pub readme_text: Option<String>,
 }
 
 pub struct Blob {
@@ -28,7 +35,7 @@ pub struct Blob {
 pub struct RepoDetails {
     active_branch: String,
     branches: Vec<String>,
-    tree: Vec<TreeItem>,
+    tree_response: TreeResponse,
 }
 
 pub struct RepoDir {
@@ -75,47 +82,98 @@ impl<'a> Repo<'a> {
         })
     }
 
-    fn filter_tree(item: TreeEntry) -> Option<TreeItem> {
+    fn filter_tree(repo: &Repo, item: TreeEntry) -> Option<TreeItem> {
         let name = String::from(item.name().unwrap());
         let oid_str = item.id().to_string();
+
+        let mut contents = None;
+
+        if name == "README.md" {
+            if let Ok(blob) = repo.get_blob(&oid_str) {
+                contents = match str::from_utf8(&blob.content) {
+                    Ok(s) => match util::md_to_gemtext(&s) {
+                        Ok(v) => {
+                            let readme_text =
+                                format!("\r\n\r\n\r\n# \u{1F4D6} README\r\n\r\n\r\n{}", v);
+                            Some(readme_text)
+                        }
+                        Err(_) => None,
+                    },
+                    Err(_) => None,
+                };
+            }
+        }
+
         match item.kind() {
             Some(ObjectType::Tree) => Some(TreeItem {
                 id: oid_str,
                 name: name,
                 item_type: ItemType::Tree,
                 icon: String::from("\u{1F4C1}"),
+                content_string: contents,
             }),
             Some(ObjectType::Blob) => Some(TreeItem {
                 id: oid_str,
                 name: name,
                 item_type: ItemType::Blob,
                 icon: String::from("\u{1F4C4}"),
+                content_string: contents,
             }),
             _ => None,
         }
     }
 
-    pub fn get_tree(&self, hash: &str) -> Result<Vec<TreeItem>, Box<dyn Error>> {
+    pub fn get_tree(&self, hash: &str) -> Result<TreeResponse, Box<dyn Error>> {
         let oid = Oid::from_str(hash)?;
         let object = self.repo.find_object(oid, Some(ObjectType::Tree))?;
 
+        let mut readme_text = None;
         let tree = object
             .peel_to_tree()?
             .iter()
-            .filter_map(Repo::filter_tree)
+            .filter_map(|i| match Repo::filter_tree(&self, i) {
+                Some(v) => {
+                    if v.name == "README.md" {
+                        readme_text = match &v.content_string {
+                            Some(text) => Some(String::from(text)),
+                            None => None,
+                        };
+                    };
+                    Some(v)
+                }
+                None => None,
+            })
             .collect::<Vec<TreeItem>>();
 
-        Ok(tree)
+        Ok(TreeResponse {
+            tree: tree,
+            readme_text: readme_text,
+        })
     }
 
-    fn get_ref_tree(&self, reference: &Reference) -> Result<Vec<TreeItem>, Box<dyn Error>> {
+    fn get_ref_tree(&self, reference: &Reference) -> Result<TreeResponse, Box<dyn Error>> {
+        let mut readme_text = None;
         let tree = reference
             .peel_to_tree()?
             .iter()
-            .filter_map(Repo::filter_tree)
+            .filter_map(|i| match Repo::filter_tree(&self, i) {
+                Some(v) => {
+                    if v.name == "README.md" {
+                        readme_text = match &v.content_string {
+                            Some(text) => Some(String::from(text)),
+                            None => None,
+                        };
+                    };
+                    Some(v)
+                }
+                None => None,
+            })
             .collect::<Vec<TreeItem>>();
 
-        Ok(tree)
+        Ok(TreeResponse {
+            tree: tree,
+            readme_text: readme_text,
+        })
     }
 
     pub fn get_details(&self) -> Result<RepoDetails, Box<dyn Error>> {
@@ -125,23 +183,23 @@ impl<'a> Repo<'a> {
         let refs_path = format!("{}/refs/heads", self.dir_path);
         let branches = util::get_files(&refs_path)?;
 
-        let tree = self.get_ref_tree(&head)?;
+        let tree_response = self.get_ref_tree(&head)?;
 
         Ok(RepoDetails {
             active_branch: String::from(active_branch),
             branches: branches,
-            tree: tree,
+            tree_response: tree_response,
         })
     }
 
-    pub fn get_branch_tree(&self, branch: &str) -> Result<Vec<TreeItem>, Box<dyn Error>> {
+    pub fn get_branch_tree(&self, branch: &str) -> Result<TreeResponse, Box<dyn Error>> {
         let ref_path = format!("refs/heads/{}", branch);
 
         let branch_ref = self.repo.find_reference(&ref_path)?;
 
-        let tree = self.get_ref_tree(&branch_ref)?;
+        let tree_response = self.get_ref_tree(&branch_ref)?;
 
-        Ok(tree)
+        Ok(tree_response)
     }
 }
 
