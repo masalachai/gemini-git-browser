@@ -6,7 +6,9 @@ It can be seen in action at gemini://git.ritesh.ch
 
 Or on https://proxy.vulpes.one/gemini/git.ritesh.ch/ if you're on an HTTP browser.
 
-![Single Repo View](https://ci.ayravat.com/filestore/single-repo.jpeg) ![File View](https://ci.ayravat.com/filestore/file.jpeg) ![Repo List View](https://ci.ayravat.com/filestore/repos.jpeg)
+If the tree contains a README.md file, like github and other popular web UIs for git, it will automatically convert and render the README.md to the gemini page.
+
+![Single Repo View](https://ci.ayravat.com/filestore/single-repo.jpeg) ![File View](https://ci.ayravat.com/filestore/file.jpeg) ![Repo List View](https://ci.ayravat.com/filestore/repos.jpeg) ![Readme View](https://ci.ayravat.com/filestore/readme.jpeg)
 
 ## Demo
 
