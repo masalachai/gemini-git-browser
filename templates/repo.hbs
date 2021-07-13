@@ -7,8 +7,11 @@
 
 
 ## Tree
-{{#each details.tree_response.tree}}
+{{#each trees}}
 => /{{ ../path }}/{{ this.item_type }}/{{ this.id }}       {{ this.icon }} {{ this.name }}
+{{/each}}
+{{#each blobs}}
+=> /{{ ../path }}/{{ this.item_type }}/{{ this.id }} {{ this.icon }} {{ this.name }}
 {{/each}}
 
 

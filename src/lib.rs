@@ -13,7 +13,7 @@ pub mod actions {
     use serde_json::json;
     use mime;
 
-    use crate::repo;
+    use crate::{repo, repo::ItemType};
 
     async fn get_html(name: &str, template_path: &str, json: &serde_json::Value) -> anyhow::Result<Response> {
         let mut hb = Handlebars::new();
@@ -50,13 +50,16 @@ pub mod actions {
         let repo = repo::Repo::new(&repo_path).unwrap();
 
         let tree_response = repo.get_tree(&path_segments[3]).unwrap();
+        let trees = tree_response.get_by_type(ItemType::Tree);
+        let blobs = tree_response.get_by_type(ItemType::Blob);
 
         get_html(
             "branch",
             "./templates/tree.hbs",
             &json!({
                 "path": repo_path,
-                "tree": tree_response.tree,
+                "trees": trees,
+                "blobs": blobs,
                 "readme": tree_response.readme_text
             })
         ).await
@@ -69,6 +72,8 @@ pub mod actions {
         let branch = &path_segments[3];
 
         let tree_response = repo.get_branch_tree(&branch).unwrap();
+        let trees = tree_response.get_by_type(ItemType::Tree);
+        let blobs = tree_response.get_by_type(ItemType::Blob);
 
         get_html(
             "branch",
@@ -76,7 +81,8 @@ pub mod actions {
             &json!({
                 "path": repo_path,
                 "title": branch,
-                "tree": tree_response.tree,
+                "trees": trees,
+                "blobs": blobs,
                 "readme": tree_response.readme_text
             })
         ).await
@@ -86,13 +92,17 @@ pub mod actions {
         let repo = repo::Repo::new(path).unwrap();
 
         let repo_details = repo.get_details().unwrap();
+        let trees = repo_details.tree_response.get_by_type(ItemType::Tree);
+        let blobs = repo_details.tree_response.get_by_type(ItemType::Blob);
 
         get_html(
             "repo",
             "./templates/repo.hbs",
             &json!({
                 "path": path,
-                "details": repo_details
+                "details": repo_details,
+                "trees": trees,
+                "blobs": blobs
             })
         ).await
     }

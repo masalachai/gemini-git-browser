@@ -1,6 +1,9 @@
 ## Tree
-{{#each this.tree}}
+{{#each this.trees}}
 =>/{{ ../path }}/{{ this.item_type }}/{{ this.id }}       {{ this.icon }} {{ this.name }}
+{{/each}}
+{{#each this.blobs}}
+=>/{{ ../path }}/{{ this.item_type }}/{{ this.id }} {{ this.icon }} {{ this.name }}
 {{/each}}
 
 {{#if readme}}

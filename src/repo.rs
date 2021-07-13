@@ -4,7 +4,7 @@ use std::{collections::HashMap, env, error::Error, str};
 
 use crate::util;
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, PartialEq)]
 #[serde(rename_all = "snake_case")]
 pub enum ItemType {
     Tree,
@@ -35,7 +35,7 @@ pub struct Blob {
 pub struct RepoDetails {
     active_branch: String,
     branches: Vec<String>,
-    tree_response: TreeResponse,
+    pub tree_response: TreeResponse,
 }
 
 pub struct RepoDir {
@@ -52,6 +52,21 @@ pub struct Repo<'a> {
 
 lazy_static! {
     pub static ref REPO_DIR: RepoDir = RepoDir::new();
+}
+
+impl TreeResponse {
+    pub fn get_by_type(&self, item_type: ItemType) -> Vec<&TreeItem> {
+        self.tree
+            .iter()
+            .filter_map(|i| {
+                if i.item_type == item_type {
+                    Some(i)
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<&TreeItem>>()
+    }
 }
 
 impl<'a> Repo<'a> {
