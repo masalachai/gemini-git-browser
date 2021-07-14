@@ -1,4 +1,5 @@
 User-Agent: *
+Allow: /ritesh/gemini-git-browser.git
 Disallow: /chitlangi
 Disallow: /ritesh
 Allow: /
