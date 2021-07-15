@@ -3,6 +3,7 @@ Disallow: /*tree
 Disallow: /*blob
 Disallow: /*branch
 Allow: /ritesh/gemini-git-browser.git
+Allow: /ritesh/deploy-scripts.git
 Disallow: /chitlangi
 Disallow: /ritesh
 Allow: /
