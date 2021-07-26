@@ -1,2 +1,2 @@
-allowed = ["chitlangi", "ritesh", "chitlangi/ritesh.ch.git", "chitlangi/gemini-git-browser.git", "ritesh/epp-rtk-java-extensions.git", "ritesh/epp-rtk-java-extras.git", "ritesh/deploy-scripts.git", "ritesh/gemini-git-browser.git"]
+allowed = ["chitlangi", "ritesh", "chitlangi/ritesh.ch.git", "ritesh/epp-client.git", "ritesh/epp-rtk-java-extensions.git", "ritesh/epp-rtk-java-extras.git", "ritesh/deploy-scripts.git", "ritesh/gemini-git-browser.git"]
 title = "Ritesh Chitlangi -"

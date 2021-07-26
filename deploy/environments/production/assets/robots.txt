@@ -1,10 +1,14 @@
 User-Agent: *
+Disallow: /ritesh/epp-client.git/tree
+Disallow: /ritesh/epp-client.git/blob
+Disallow: /ritesh/epp-client.git/branch
 Disallow: /ritesh/gemini-git-browser.git/tree
 Disallow: /ritesh/gemini-git-browser.git/blob
 Disallow: /ritesh/gemini-git-browser.git/branch
 Disallow: /ritesh/deploy-scripts.git/tree
 Disallow: /ritesh/deploy-scripts.git/blob
 Disallow: /ritesh/deploy-scripts.git/branch
+Allow: /ritesh/epp-client.git
 Allow: /ritesh/gemini-git-browser.git
 Allow: /ritesh/deploy-scripts.git
 Disallow: /chitlangi
