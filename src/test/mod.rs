@@ -15,7 +15,5 @@ fn test_md_to_gemtext() {
 
     let gemtext = md_to_gemtext(buf.as_str()).unwrap();
 
-    println!("{}", gemtext);
-
     assert_eq!(gem_buf, gemtext);
 }
