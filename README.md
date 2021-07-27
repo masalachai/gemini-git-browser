@@ -51,15 +51,15 @@ Once the `REPO_DIR` variable and `gemini-git-browser.toml` file is set, executin
 The UI is also packaged as a docker image for easy deployment. To run it:
 
 - create the `gemini-git-browser.toml` file
-- a TLS certificate and private key (gemini uses TLS by default)
-- mount the `gemini-git-browser.toml`, the certificate and private key and your repository directory into the container with the following command:
+- create a TLS certificate and private key (gemini uses TLS by default)
+- mount the `gemini-git-browser.toml`, the certificate, private key, and your repository directory into the container with the following command:
 
 ```
 docker run -p 1965:1965 \
 	-v /etc/letsencrypt/live/yourdomain.com/fullchain.pem:/app/cert/cert.pem \
 	-v /etc/letsencrypt/live/yourdomain.com/privkey.pem:/app/cert/key.pem \
 	-v /my-repositories:/repositories
-	-v $HOME/.config/config/config.toml:/root/.config/config/config.toml
+	-v $HOME/.config/gemini-git-browser/gemini-git-browser.toml:/root/.config/gemini-git-browser/gemini-git-browser.toml
 	-it ayravat/gemini-git-browser:latest
 ```
 The paths used in this example are the default let's encrypt certificate and key paths and the default location of the `gemini-git-browser.toml` file. Please adjust the command accordingly if your certificate or toml file paths are different.
