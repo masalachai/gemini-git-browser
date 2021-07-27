@@ -224,7 +224,7 @@ impl RepoDir {
             panic!("Error reading REPO_DIR: {}", err);
         });
 
-        let config: util::Config = match confy::load("config") {
+        let config: util::Config = match confy::load("gemini-git-browser") {
             Ok(cfg) => cfg,
             Err(e) => panic!("Config read error: {}", e),
         };
