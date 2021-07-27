@@ -13,7 +13,7 @@ RUN apt update --fix-missing \
 ADD . $APP_HOME
 
 RUN mkdir -p /root/.config/config \
-	&& mv deploy/gemini-git-browser.toml /root/.config/config \
+	&& mv deploy/gemini-git-browser.toml /root/.config/gemini-git-browser \
 	&& mv deploy/robots.txt /app/static/ \
 	&& printf "RUST_LOG=northstar=debug bin/gemini-git-browser\n" > start.sh
 
