@@ -62,7 +62,8 @@ pub fn get_files(dir: &str) -> Result<Vec<String>, Box<dyn Error>> {
 
 pub fn md_to_gemtext(contents: &str) -> Result<String, Box<dyn Error>> {
     let link_regex = Regex::new(r"(?x)(?P<text>\[[^\[]*\])\s*(?P<link>\([^\(]*\))")?;
-    let link_strip = Regex::new(r"[!]*\[[^\[]*\]\s*\([^\(]*\)")?;
+    let link_strip = Regex::new(r"(\[?!)*\[[^\[]*\]\s*\([^\(]*\)")?;
+    let replace_link_text_chars = Regex::new(r"\([^\)]*\)")?;
     let replace_chars = Regex::new(r"[\[\]\(\)]*")?;
     let anchor_link_regex = Regex::new(r"^#.*")?;
     let backticks_regex = Regex::new(r"^[`]{3}.*")?;
@@ -95,7 +96,8 @@ pub fn md_to_gemtext(contents: &str) -> Result<String, Box<dyn Error>> {
         }
 
         for link in link_regex.captures_iter(&line) {
-            let link_text = replace_chars.replace_all(&link["text"], "");
+            let link_text = replace_link_text_chars.replace_all(&link["text"], "");
+            let link_text = replace_chars.replace_all(&link_text, "");
             let link_uri = replace_chars.replace_all(&link["link"], "");
             let mut is_anchor_link = false;
 
